@@ -4,23 +4,29 @@
 import PackageDescription
 
 let package = Package(
-    name: "ReportIssueSwift62Bug",
-    products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(
-            name: "ReportIssueSwift62Bug",
-            targets: ["ReportIssueSwift62Bug"]
-        ),
-    ],
-    targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
-        .target(
-            name: "ReportIssueSwift62Bug"
-        ),
-        .testTarget(
-            name: "ReportIssueSwift62BugTests",
-            dependencies: ["ReportIssueSwift62Bug"]
-        ),
-    ]
+  name: "ReportIssueSwift62Bug",
+  products: [
+    // Products define the executables and libraries a package produces, making them visible to other packages.
+    .library(
+      name: "ReportIssueSwift62Bug",
+      targets: ["ReportIssueSwift62Bug"]
+    ),
+  ],
+  dependencies: [
+    .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "remove-main-actor-now")
+  ],
+  targets: [
+    // Targets are the basic building blocks of a package, defining a module or a test suite.
+    // Targets can depend on other targets in this package and products from dependencies.
+    .target(
+      name: "ReportIssueSwift62Bug"
+    ),
+    .testTarget(
+      name: "ReportIssueSwift62BugTests",
+      dependencies: [
+        "ReportIssueSwift62Bug",
+        .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+      ]
+    ),
+  ]
 )
