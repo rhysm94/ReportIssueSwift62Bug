@@ -5,23 +5,15 @@ import Testing
 
 @MainActor
 final class MyClass {
-  var count = 1
-
   // Works if you remove `isolated`
   isolated deinit {
-    count -= 1
     reportIssue("Reporting an issue")
-  }
-
-  func doSomething() {
-    count += 1
   }
 }
 
-@Test func reportIssueTest() async {
-  await withExpectedIssue {
-    let myClass = MyClass()
-    await myClass.doSomething()
+@Test func reportIssueTest() {
+  withExpectedIssue {
+    _ = MyClass()
   }
 }
 
