@@ -3,6 +3,28 @@ import ComposableArchitecture
 import Testing
 @testable import ReportIssueSwift62Bug
 
+@MainActor
+final class MyClass {
+  var count = 1
+
+  // Works if you remove `isolated`
+  isolated deinit {
+    count -= 1
+    reportIssue("Reporting an issue")
+  }
+
+  func doSomething() {
+    count += 1
+  }
+}
+
+@Test func reportIssueTest() async {
+  await withExpectedIssue {
+    let myClass = MyClass()
+    await myClass.doSomething()
+  }
+}
+
 // Passes on `main` and fails on `remove-main-actor-now`
 @Test func receiveAction_IgnoredAction() async {
   await withExpectedIssue {
@@ -50,3 +72,5 @@ struct ReducerWithDelay: Reducer, Sendable {
     }
   }
 }
+
+
